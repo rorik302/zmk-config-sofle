@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2020 Ryan Cross
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "sofle.dtsi"
+
+&default_transform {
+    col-offset = <6>;
+};
+
+&kscan0 {
+    col-gpios
+        = <&pro_micro 10 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 19 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&right_encoder {
+    status = "okay";
+};
+
+
+/ {
+    /* assign feedback device from actual DRV2605 i2c device */
+    lra0: output_haptic_fb_0 {
+        compatible = "zmk,output-haptic-feedback";
+        #binding-cells = <0>;
+        /* only one driver type is supported now */
+        driver = "drv2605";
+        /* labled i2c device with [zmk-drv2605-driver] */
+        device = <&drv2605_0>;
+    };
+};
